@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>System Update ❤️</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Roboto', 'sans-serif'] },
+                    colors: {
+                        samsung: { bg: '#f2f1f6', primary: '#6200ee' }
+                    },
+                    borderRadius: { '3xl': '28px' },
+                    boxShadow: { 'soft': '0 4px 20px rgba(0,0,0,0.05)' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #000; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        
+        /* AOD Screen */
+        #aod-screen { background: #000; color: #ccc; }
+        .fingerprint-ring { border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 50%; animation: ripple 1.5s infinite; }
+        @keyframes ripple { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+        /* Main UI */
+        #main-ui { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .one-ui-header { font-weight: 500; letter-spacing: -0.5px; }
+        .no-select { user-select: none; }
+        
+        /* Image Styling */
+        .photo-cover { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body class="font-sans no-select h-screen w-screen relative">
+
+    <div id="aod-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-between py-12 px-6">
+        
+        <div class="mt-16 text-center w-full">
+            <h1 id="clock-aod" class="text-7xl font-light text-white tracking-tight mb-2">12:00</h1>
+            <div class="flex items-center justify-center gap-2 text-sm text-[#a0a0a0]">
+                <span class="material-icons-round text-base">calendar_today</span>
+                <span>Σάββατο, 14 Φεβρουαρίου</span>
+            </div>
+            
+            <div class="mt-8 bg-[#222] rounded-[24px] p-3 inline-flex items-center gap-3 w-full max-w-[90%] shadow-lg border border-[#333]">
+                <div class="w-12 h-12 rounded-full overflow-hidden border border-white/20 shrink-0">
+                    <img src="photo_kiss.jpg" class="photo-cover" alt="Us">
+                </div>
+                <div class="text-left flex-1 min-w-0">
+                    <div class="flex justify-between items-center mb-0.5">
+                        <p class="text-white text-sm font-bold truncate">Ειδοποίηση Συστήματος</p>
+                        <span class="text-[#888] text-[10px]">Τώρα</span>
+                    </div>
+                    <p class="text-[#ccc] text-xs truncate">Ο Γιάννης ζητάει την προσοχή σου...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12 flex flex-col items-center gap-4 cursor-pointer" onclick="unlockPhone()">
+            <div class="relative w-16 h-16 flex items-center justify-center">
+                <div class="fingerprint-ring absolute inset-0"></div>
+                <span class="material-icons-round text-white text-4xl opacity-80">fingerprint</span>
+            </div>
+            <p class="text-xs text-[#666] uppercase tracking-widest font-medium">Touch to unlock</p>
+        </div>
+    </div>
+
+
+    <div id="main-ui" class="absolute inset-0 z-40 hidden flex flex-col">
+        
+        <div class="h-8 w-full flex justify-between items-center px-6 pt-2 text-black/60 text-xs font-medium">
+            <span id="clock-status">12:00</span>
+            <div class="flex gap-2"><span class="material-icons-round text-sm">wifi</span><span class="material-icons-round text-sm">battery_full</span></div>
+        </div>
+
+        <div class="pt-10 px-6 mb-4">
+            <p class="text-samsung-primary font-bold text-xs uppercase tracking-wider mb-1">Relationship OS 2.0</p>
+            <h1 class="text-4xl text-[#1a1a1a] one-ui-header">Γεια σου,<br>Έφη ❤️</h1>
+        </div>
+
+        <div class="flex-1 px-4 pb-24 overflow-y-auto">
+            
+            <div class="glass-panel rounded-3xl p-5 mb-4 shadow-soft">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-md shrink-0 border-2 border-white">
+                        <img src="photo_flowers.jpg" class="photo-cover" alt="Profile">
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-black leading-tight">Status: <br>In Love</h3>
+                        <p class="text-xs text-[#555] mt-1">Στατιστικά σε πραγματικό χρόνο</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <div class="bg-white/60 rounded-2xl p-3 flex-1 text-center">
+                        <span id="years" class="block text-xl font-bold text-black">0</span>
+                        <span class="text-[10px] uppercase text-[#666] font-bold">Χρονια</span>
+                    </div>
+                    <div class="bg-white/60 rounded-2xl p-3 flex-1 text-center">
+                        <span id="days" class="block text-xl font-bold text-black">0</span>
+                        <span class="text-[10px] uppercase text-[#666] font-bold">Ημερες</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow-soft relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-purple-500 to-pink-500"></div>
+                <h2 class="text-xl font-bold text-black mb-2">Εκκρεμής Ενέργεια</h2>
+                <p class="text-sm text-[#555] mb-8 leading-relaxed">
+                    Θέλεις να γίνεις (πάλι) ο Βαλεντίνος μου; <br>
+                </p>
+
+                <div class="relative h-16 w-full">
+                     <button id="yesBtn" class="absolute right-0 bottom-0 bg-black text-white px-8 py-3 rounded-2xl font-medium text-sm shadow-lg active:scale-95 transition-transform z-10">
+                        ΝΑΙ, ΔΕΧΟΜΑΙ
+                    </button>
+                    <button id="noBtn" class="absolute left-0 bottom-0 text-[#888] px-6 py-3 rounded-2xl font-medium text-sm bg-[#f5f5f5] border border-[#eee]">
+                        ΟΧΙ
+                    </button>
+                </div>
+            </div>
+            
+             <p class="text-center text-[10px] text-white/60 mt-8">Developed with ❤️ by Giannis</p>
+        </div>
+    </div>
+
+    <div id="success-sheet" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500" onclick="location.reload()"></div>
+        <div class="absolute bottom-0 left-0 w-full bg-white rounded-t-[36px] p-6 pb-12 transform translate-y-full transition-transform duration-500 ease-out" id="sheet-content">
+            <div class="w-12 h-1.5 bg-[#e0e0e0] rounded-full mx-auto mb-6"></div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-sm">
+                    🥰
+                </div>
+                <h2 class="text-2xl font-bold text-black mb-2">Συγχαρητήρια!</h2>
+                <p class="text-[#555] text-sm mb-6">
+                    H συνδρομή ανανεώθηκε.<br>Επόμενη χρέωση: 14/02/2126.
+                </p>
+                
+                <div class="w-full aspect-[4/5] rounded-3xl overflow-hidden mb-6 border-4 border-white shadow-xl relative">
+                    <img src="photo_glasses.jpg" class="photo-cover object-center" alt="Kiss">
+                    
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-6 pt-12 text-left">
+                        <p class="text-white font-bold text-lg">Σ' αγαπάω!</p>
+                        <p class="text-white/80 text-xs">Ραντεβού 14 Φεβρουαρίου</p>
+                    </div>
+                </div>
+
+                <button onclick="location.reload()" class="w-full bg-[#1a1a1a] text-white py-4 rounded-2xl font-bold text-sm tracking-wide">
+                    ΚΛΕΙΣΙΜΟ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIC ---
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('clock-aod').innerText = timeString;
+            document.getElementById('clock-status').innerText = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        const start = new Date("2024-12-21T00:00:00").getTime();
+        function updateStats() {
+            const now = new Date().getTime();
+            const diff = now - start;
+            const daysTotal = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const years = Math.floor(daysTotal / 365);
+            const daysLeft = daysTotal % 365;
+            document.getElementById('years').innerText = years;
+            document.getElementById('days').innerText = daysLeft;
+        }
+        updateStats();
+
+        function unlockPhone() {
+            const aod = document.getElementById('aod-screen');
+            const main = document.getElementById('main-ui');
+            if (navigator.vibrate) navigator.vibrate(50);
+            main.classList.remove('hidden');
+            gsap.to(aod, { opacity: 0, scale: 1.1, duration: 0.4, onComplete: () => { aod.style.display = 'none'; } });
+            gsap.from(main, { opacity: 0, y: 50, duration: 0.5, delay: 0.1 });
+            gsap.from(".glass-panel, .bg-white", { y: 30, opacity: 0, stagger: 0.1, delay: 0.3, duration: 0.6, ease: "back.out(1.5)" });
+        }
+
+        // TOUCH PHYSICS FOR NO BUTTON
+        const noBtn = document.getElementById('noBtn');
+        const messages = ["Error", "Lag", "Stop", "Nope", "Ελααα"];
+        let msgIndex = 0;
+
+        function moveButton(e) {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const rect = noBtn.getBoundingClientRect();
+            const btnCenter = { x: rect.left + rect.width/2, y: rect.top + rect.height/2 };
+            const dist = Math.hypot(clientX - btnCenter.x, clientY - btnCenter.y);
+
+            if (dist < 80) {
+                const x = (Math.random() - 0.5) * 150; 
+                const y = (Math.random() - 0.8) * 120;
+                gsap.to(noBtn, {
+                    x: x, y: y, duration: 0.2, ease: "power1.out", overwrite: "auto",
+                    onStart: () => {
+                        noBtn.innerText = messages[msgIndex];
+                        msgIndex = (msgIndex + 1) % messages.length;
+                        noBtn.style.color = "#ff0000";
+                    }
+                });
+            }
+        }
+        document.addEventListener('touchstart', moveButton, {passive: false});
+        document.addEventListener('touchmove', moveButton, {passive: false});
+        document.addEventListener('mousemove', moveButton);
+
+        // SUCCESS
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            const sheet = document.getElementById('success-sheet');
+            const content = document.getElementById('sheet-content');
+            sheet.classList.remove('hidden');
+            requestAnimationFrame(() => { content.style.transform = "translateY(0)"; });
+
+            const end = Date.now() + 3000;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#6200ee', '#ff0266'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#6200ee', '#ff0266'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        });
+    </script>
+</body>
+</html>
